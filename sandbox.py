@@ -1,31 +1,32 @@
-# Definition for singly-linked list.
-from typing import Optional
-from math import log10
-
 class Solution:
-    def findMedianSortedArrays(self, nums1: list[int], nums2: list[int]) -> float:
-        left_counter = 0
-        right_counter = 0
-        final_list = []
-        while left_counter < len(nums1) or right_counter < len(nums2):
-            if right_counter == len(nums2) or (left_counter < len(nums1) and nums1[left_counter] < nums2[right_counter]):
-                final_list.append(nums1[left_counter])
-                left_counter += 1
-            else:
-                final_list.append(nums2[right_counter])
-                right_counter += 1
-        if len(final_list) % 2 == 0:
-            median = float((final_list[len(final_list)//2] + final_list[len(final_list)//2 - 1]) / 2)
-        else:
-            print(final_list)
-            median = float(final_list[len(final_list)//2])
-        return median
+    def longestPalindrome(self, s: str) -> str:
+        if len(s) == 1:
+            return s
+        longest = len(s)
+        found_palindrome = False
+        while not(found_palindrome):
+            for i in range(len(s) - longest+1):
+                substring = s[i:i+longest]
+                print(substring)
+                for j in range(len(substring)//2):
+                    print(j, substring[j], substring[-1-j])
+                    if substring[j] != substring[-1-j]:
+                        found_palindrome = False
+                        break
+                    else:
+                        found_palindrome = True
+                if found_palindrome:
+                    return substring
+            if not(found_palindrome):
+                longest -= 1
+                if longest == 1:
+                    return s[0]
+        return ""
 
+input1 = "babad"
+input2 = "cbbd"
+input3 = "a"
+print(Solution().longestPalindrome(input1))
+print(Solution().longestPalindrome(input2))
+print(Solution().longestPalindrome(input3))
 
-
-sol = Solution()
-nums1 = [1,2]
-nums2 = [3,4]
-# nums1 = [1,3]
-# nums2 = [2]
-sol.findMedianSortedArrays(nums1, nums2)
